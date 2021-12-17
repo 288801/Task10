@@ -5,14 +5,17 @@ import java.util.ArrayList;
 
 public class Task {
 
-    public static int[][] solution(int[][] matrix){
-        // в матрице в каждой строке 3 числа: x координата, y координата и радиус одний окружности.
+    public static ArrayList<Circle> convertMatrixToList(int[][] matrix){
         ArrayList<Circle> circles = new ArrayList<>();
         for(int i = 0; i < matrix.length; i++){
             Circle c = new Circle(matrix[i][0], matrix[i][1], matrix[i][2]);
             circles.add(c);
         }
-        int[] intersectionCounter = new int[matrix.length];
+        return circles;
+    }
+    public static int[][] solution(ArrayList<Circle> circles){
+        // в матрице в каждой строке 3 числа: x координата, y координата и радиус одний окружности.
+        int[] intersectionCounter = new int[circles.size()];
 
         for(int i = 0; i < circles.size()-1; i++){
             for(int k = 0; k < circles.size(); k++){
@@ -29,15 +32,7 @@ public class Task {
                 }
             }
         }
-        for(int i = 0; i < matrix.length - 1; i++){
-            for(int k = i + 1; k < matrix.length; k++){
-                double distanceBetweenCenters = Math.sqrt((matrix[i][0]-matrix[k][0])*(matrix[i][0]-matrix[k][0]) + (matrix[i][1]-matrix[k][1])*(matrix[i][1]-matrix[k][1]));
-                if(distanceBetweenCenters <= matrix[i][2]+matrix[k][2]){
-                    intersectionCounter[i]++;
-                    intersectionCounter[k]++;
-                }
-            }
-        }
+
         int counterOfTrueCircles = 0;
         for(int n = 0; n < intersectionCounter.length; n++){          // считаем количество подходящих окружностей, чтобы после создать матрицу с таким же количеством строк.
             if(intersectionCounter[n] == 0){
@@ -48,7 +43,9 @@ public class Task {
         int index = 0;
         for(int n = 0; n < intersectionCounter.length; n++){          // заполняем возвращаемый двумерный массив параметрами непересекающихся ни с чем окружностей.
             if(intersectionCounter[n] == 0){
-                trueCircles[index] = matrix[n];
+                trueCircles[index][0] = circles.get(n).getX0();
+                trueCircles[index][1] = circles.get(n).getY0();
+                trueCircles[index][2] = circles.get(n).getR();
                 index++;
             }
         }
