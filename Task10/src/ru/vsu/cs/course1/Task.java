@@ -13,7 +13,18 @@ public class Task {
         }
         return circles;
     }
-    public static int[][] solution(ArrayList<Circle> circles){
+
+    public static int[][] convertListToMatrix(ArrayList<Circle> circles){
+        int[][] matrix = new int[circles.size()][3];
+        for(int i = 0; i < circles.size(); i++){
+            matrix[i][0] = circles.get(i).getX0();
+            matrix[i][1] = circles.get(i).getY0();
+            matrix[i][2] = circles.get(i).getR();
+        }
+        return matrix;
+    }
+
+    public static ArrayList<Circle> solution(ArrayList<Circle> circles){
         // в матрице в каждой строке 3 числа: x координата, y координата и радиус одний окружности.
         int[] intersectionCounter = new int[circles.size()];
 
@@ -33,20 +44,10 @@ public class Task {
             }
         }
 
-        int counterOfTrueCircles = 0;
-        for(int n = 0; n < intersectionCounter.length; n++){          // считаем количество подходящих окружностей, чтобы после создать матрицу с таким же количеством строк.
-            if(intersectionCounter[n] == 0){
-                counterOfTrueCircles++;
-            }
-        }
-        int[][] trueCircles = new int[counterOfTrueCircles][3];
-        int index = 0;
+        ArrayList<Circle> trueCircles = new ArrayList<>();
         for(int n = 0; n < intersectionCounter.length; n++){          // заполняем возвращаемый двумерный массив параметрами непересекающихся ни с чем окружностей.
             if(intersectionCounter[n] == 0){
-                trueCircles[index][0] = circles.get(n).getX0();
-                trueCircles[index][1] = circles.get(n).getY0();
-                trueCircles[index][2] = circles.get(n).getR();
-                index++;
+                trueCircles.add(circles.get(n));
             }
         }
         return trueCircles;

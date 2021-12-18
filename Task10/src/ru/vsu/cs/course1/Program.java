@@ -100,7 +100,7 @@ public class Program {
                 System.exit(2);
             }
 
-            int[][] trueCircles = Task.solution(Task.convertMatrixToList(matrix));
+            int[][] trueCircles = Task.convertListToMatrix(Task.solution(Task.convertMatrixToList(matrix)));
             PrintStream out = (params.outputFile != null) ? new PrintStream(params.outputFile) : System.out;
             out.println(ArrayUtils.toString(trueCircles));
             out.close();

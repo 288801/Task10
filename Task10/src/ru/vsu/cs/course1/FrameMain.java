@@ -137,7 +137,7 @@ public class FrameMain extends JFrame {
             public void actionPerformed(ActionEvent actionEvent) {
                 try {
                     int[][] matrix = JTableUtils.readIntMatrixFromJTable(tableInput);
-                    int[][] trueCircles = Task.solution(Task.convertMatrixToList(matrix));
+                    int[][] trueCircles = Task.convertListToMatrix(Task.solution(Task.convertMatrixToList(matrix)));
                     JTableUtils.writeArrayToJTable(tableOutput, trueCircles);
                 } catch (Exception e) {
                     SwingUtils.showErrorMessageBox(e);
